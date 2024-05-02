@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<head>
+    <title>Matrix Multiplication</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .matrix-input {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Matrix Multiplication</h2>
+        <p>Enter Matrices below:</p>
+        <form id="MatrixForm">
+            <div class="matrix-input">
+                <label for="matrix1">Enter Matrix 1:</label><br>
+                <textarea id="matrix1" rows="4" placeholder="Enter space-separated numbers"></textarea>
+            </div>
+
+            <div class="matrix-input">
+                <label for="matrix2">Enter Matrix 2:</label><br>
+                <textarea id="matrix2" rows="4" placeholder="Enter space-separated numbers"></textarea>
+            </div>
+
+            <button type="button" onclick="multiplyMatrices()">Multiply Matrices</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function multiplyMatrices() {
+                var matrix1 = document.getElementById("matrix1").value.trim();
+                var matrix2 = document.getElementById("matrix2").value.trim();
+
+                // Splitting the input into rows
+                var rows1 = matrix1.split("\n");
+                var rows2 = matrix2.split("\n");
+
+                // Matrix 1 dimensions
+                var rows1Count = rows1.length;
+                var cols1Count = rows1[0].split(" ").length;
+
+                // Matrix 2 dimensions
+                var rows2Count = rows2.length;
+                var cols2Count = rows2[0].split(" ").length;
+
+                if (cols1Count !== rows2Count) {
+                    alert("Cannot multiply matrices. Number of columns in Matrix 1 must be equal to number of rows in Matrix 2.");
+                    return;
+                }
+
+                var result = new Array(rows1Count);
+                for (var i = 0; i < rows1Count; i++) {
+                    result[i] = new Array(cols2Count).fill(0);
+                }
+
+                for (var i = 0; i < rows1Count; i++) {
+                    var row1 = rows1[i].split(" ");
+                    for (var j = 0; j < cols2Count; j++) {
+                        for (var k = 0; k < rows2Count; k++) {
+                            var val1 = parseFloat(row1[k]);
+                            var val2 = parseFloat(rows2[k].split(" ")[j]);
+                            // if (isNaN(val1) || isNaN(val2)) {
+                            //     alert("Invalid input. Please enter valid numeric values.");
+                            //     return;
+                            // }
+                        result[i][j] += val1 * val2;
+                        }
+                    }
+                }
+
+                var resultString = "Resultant Matrix:<br>";
+                for (var i = 0; i < rows1Count; i++) {
+                    resultString += result[i].join(" ") + "<br>";
+                }
+
+                document.getElementById("result").innerHTML = resultString;
+            }
+    </script>
+
+</body>
+</html>
+
